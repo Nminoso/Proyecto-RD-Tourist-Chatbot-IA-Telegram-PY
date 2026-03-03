@@ -1,29 +1,16 @@
 import os
 import logging
-import threading
-from flask import Flask
 from dotenv import load_dotenv
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 from groq import Groq
 
-# --- CONFIGURACIÓN DEL SERVIDOR WEB (PARA RENDER) ---
-app_web = Flask(__name__)
-
-@app_web.route('/')
-def index():
-    return "¡El bot turístico de RD está activo y funcionando! 🇩🇴"
-
-def run_web():
-    # Render asigna dinámicamente un puerto en la variable 'PORT'
-    port = int(os.environ.get("PORT", 10000))
-    app_web.run(host="0.0.0.0", port=port)
-
-# --- CONFIGURACIÓN DEL BOT DE TELEGRAM ---
-# Cargar variables de entorno desde .env (en local) o desde el panel de Render
+# --- CONFIGURACIÓN DE VARIABLES ---
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 GROQ_KEY = os.getenv("GROQ_API_KEY")
+# Obtenemos la URL de Render (si no está, usamos la que me diste por defecto)
+RENDER_URL = os.getenv("URL_RENDER", "https://proyecto-rd-tourist-chatbot-ia-telegram.onrender.com")
 
 # Inicializar IA
 cliente = Groq(api_key=GROQ_KEY)
@@ -74,15 +61,20 @@ async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Hubo un error con la conexión a la IA. 🌴")
 
 if __name__ == '__main__':
-    # 1. Iniciar el servidor web de Flask en un hilo paralelo
-    hilo_web = threading.Thread(target=run_web)
-    hilo_web.start()
-
-    # 2. Construir e iniciar el bot de Telegram
+    # Render asigna dinámicamente el puerto
+    PORT = int(os.environ.get('PORT', 10000))
+    
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.LOCATION, manejar_ubicacion))
     app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), responder))
     
-    print("Bot turístico RD y Servidor Web corriendo... 🇩🇴")
-    app.run_polling()
+    print("Iniciando bot turístico en modo Webhook... 🇩🇴")
+    
+    # Arrancamos el Webhook en lugar del polling
+    app.run_webhook(
+        listen="0.0.0.0",
+        port=PORT,
+        webhook_url=f"{RENDER_URL}/{TOKEN}",
+        url_path=TOKEN
+    )
