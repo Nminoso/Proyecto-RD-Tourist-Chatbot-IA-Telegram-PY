@@ -54,14 +54,14 @@ pip install -r requirements.txt
 - Crea un archivo llamado .env en la raíz del proyecto con el siguiente formato:
 
 ```
-TELEGRAM_TOKEN=tu_telegram_bot_token_aqui
+TELEGRAM_TOKEN=tu_telegram__token_aqui
 GROQ_API_KEY=tu_groq_api_key_aqui
 ```
-## 🚀 Ejecución del Bot
+## 🚀 Ejecución del 
 Una vez configurado el .env y con el ambiente virtual activo, ejecuta:
 
 ```Bash
-python bot.py
+python rdbot.py
 ```
 ## 🛠️ Funcionalidades Incluidas
 - **Menú Interactivo:** Botones de selección rápida para Playas, Montaña y Comida.
