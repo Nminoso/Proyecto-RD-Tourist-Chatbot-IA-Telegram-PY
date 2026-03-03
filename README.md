@@ -1,8 +1,8 @@
 # RD Tourist AI Bot
 Asistente virtual inteligente para Telegram diseñado para ayudar a turistas a explorar la República Dominicana. Utiliza Llama 3 (Groq) para recomendaciones personalizadas y geolocalización en tiempo real.
 
-## 📦 Archivos del Proyecto
-- bot.py – Aplicación principal del bot (Python asíncrono).
+📦 Archivos del Proyecto
+rdbot.py – Aplicación principal del bot (Python asíncrono).
 
 - .env – Variables de entorno para Tokens y API Keys (No subir a Git).
 
@@ -60,12 +60,19 @@ GROQ_API_KEY=tu_groq_api_key_aqui
 ## 🚀 Ejecución del Bot
 Una vez configurado el .env y con el ambiente virtual activo, ejecuta:
 
+<<<<<<< HEAD
 ```Bash
 python bot.py
 ```
 ## 🛠️ Funcionalidades Incluidas
 - **Menú Interactivo:** Botones de selección rápida para Playas, Montaña y Comida.
+=======
+Bash
+py rdbot.py
+🛠️ Funcionalidades Incluidas
+Menú Interactivo: Botones de selección rápida para Playas, Montaña y Comida.
+>>>>>>> refs/remotes/origin/main
 
 - **Geolocalización:** El bot recibe tu ubicación GPS y te recomienda lugares cercanos en RD.
 
-- **IA Generativa:** Respuestas dinámicas con jerga dominicana y enlaces directos a Google Maps.
+IA Generativa: Respuestas dinámicas con jerga dominicana y enlaces directos a Google Maps.
