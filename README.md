@@ -56,23 +56,25 @@ py -3.11 -m venv venv
 .\venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
+```
 
 **macOS / Linux (bash/zsh):**
+```
 python3.11 -m venv venv
 source venv/bin/activate
 python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
-
+```
 3. Configurar variables de entorno
 Crea un archivo llamado .env en la raíz del proyecto con el siguiente formato:
-
+```
 TELEGRAM_TOKEN=tu_token_de_telegram_aqui
 GROQ_API_KEY=tu_api_key_de_groq_aqui
 ENTORNO=local
 # Las siguientes variables son exclusivas para producción (Render)
 URL_RENDER=[https://tu-app.onrender.com](https://tu-app.onrender.com)
 WEBHOOK_SECRET=TuContraseñaSecretaParaWebhook123
-
+```
 Nota: Para ejecutar localmente en tu PC, asegúrate de que ENTORNO=local para activar el modo Polling.
 
 
@@ -80,7 +82,7 @@ Nota: Para ejecutar localmente en tu PC, asegúrate de que ENTORNO=local para ac
 
 ### Versión en Inglés (`README_EN.md`)
 
-```markdown
+
 # RD Tourist AI Bot 🇩🇴
 Smart virtual assistant for Telegram designed to help tourists explore the Dominican Republic. It uses Llama 3 (via Groq) for personalized recommendations, real-time geolocation, weather queries, exchange rates, and time-aware responses.
 
@@ -137,22 +139,22 @@ py -3.11 -m venv venv
 .\venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
-
+```
 macOS / Linux (bash/zsh):
-
+```
 python3.11 -m venv venv
 source venv/bin/activate
 python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
-
+```
 3. Configure environment variables
 Create a file named .env in the root of the project with the following format:
-
+```
 TELEGRAM_TOKEN=your_telegram_token_here
 GROQ_API_KEY=your_groq_api_key_here
 ENTORNO=local
 # The following variables are exclusive for production (Render)
 URL_RENDER=[https://your-app.onrender.com](https://your-app.onrender.com)
 WEBHOOK_SECRET=YourSecretWebhookPassword123
-
+```
 Note: To run locally on your PC, make sure ENTORNO=local is set to activate Polling mode.
