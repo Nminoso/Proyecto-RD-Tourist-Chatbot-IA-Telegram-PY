@@ -2,6 +2,7 @@ import os
 import logging
 from dotenv import load_dotenv
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton
+from telegram.constants import ParseMode # <-- Importante para leer HTML
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 from groq import Groq
 
@@ -9,7 +10,6 @@ from groq import Groq
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 GROQ_KEY = os.getenv("GROQ_API_KEY")
-# Obtenemos la URL de Render (si no está, usamos la que me diste por defecto)
 RENDER_URL = os.getenv("URL_RENDER", "https://proyecto-rd-tourist-chatbot-ia-telegram.onrender.com")
 
 # Inicializar IA
@@ -36,32 +36,63 @@ async def manejar_ubicacion(update: Update, context: ContextTypes.DEFAULT_TYPE):
     lat, lon = update.message.location.latitude, update.message.location.longitude
     map_link = f"https://www.google.com/maps?q={lat},{lon}"
     
-    prompt = f"El turista está en {lat}, {lon}. Recomienda 3 lugares cercanos en RD y usa jerga dominicana amigable."
+    # Prompt estricto para ubicación
+    prompt = (
+        f"El turista está en {lat}, {lon}. Recomienda 3 lugares cercanos en RD. "
+        "REGLAS ESTRICTAS: "
+        "1. NO uses asteriscos ni símbolos raros para resaltar texto. "
+        "2. Para cada lugar, DEBES añadir un enlace EXACTAMENTE con este formato HTML: "
+        "<a href='AQUÍ_LA_URL'>Ver en Google map 📍</a>. "
+        "Usa jerga dominicana amigable."
+    )
     
     try:
         res = cliente.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "system", "content": prompt}]
         )
-        await update.message.reply_text(f"📍 Estás aquí: {map_link}\n\n{res.choices[0].message.content}")
+        
+        # Limpieza forzada por si la IA envía asteriscos
+        texto_limpio = res.choices[0].message.content.replace("*", "").replace("#", "")
+        
+        await update.message.reply_text(
+            f"📍 Estás aquí: <a href='{map_link}'>Ver tu ubicación actual 📍</a>\n\n{texto_limpio}",
+            parse_mode=ParseMode.HTML # Le dice a Telegram que procese los enlaces
+        )
     except Exception as e:
+        logging.error(f"Error en GPS: {e}")
         await update.message.reply_text("¡Epa! No pude leer tu GPS ahora mismo. 🥥")
 
 async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = update.message.text
-    system_prompt = "Eres 'RD Guide Bot'. Responde siempre sobre turismo en RD y añade enlaces de Google Maps."
+    
+    # Prompt estricto para texto general
+    system_prompt = (
+        "Eres 'RD Guide Bot'. Responde siempre sobre turismo en RD. "
+        "REGLAS ESTRICTAS: "
+        "1. NO uses negritas, NO uses asteriscos, NO uses símbolos raros. Texto limpio y directo. "
+        "2. Siempre que menciones un lugar, genera su enlace a Google Maps usando EXACTAMENTE "
+        "este formato HTML: <a href='URL_DEL_LUGAR'>Ver en Google map 📍</a>."
+    )
     
     try:
         res = cliente.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": msg}]
         )
-        await update.message.reply_text(res.choices[0].message.content)
-    except Exception:
+        
+        # Limpieza forzada de asteriscos y símbolos markdown
+        texto_limpio = res.choices[0].message.content.replace("*", "").replace("#", "")
+        
+        await update.message.reply_text(
+            texto_limpio, 
+            parse_mode=ParseMode.HTML # Convierte las etiquetas <a> en enlaces clickeables
+        )
+    except Exception as e:
+        logging.error(f"Error en IA: {e}")
         await update.message.reply_text("Hubo un error con la conexión a la IA. 🌴")
 
 if __name__ == '__main__':
-    # Render asigna dinámicamente el puerto
     PORT = int(os.environ.get('PORT', 10000))
     
     app = ApplicationBuilder().token(TOKEN).build()
@@ -69,9 +100,8 @@ if __name__ == '__main__':
     app.add_handler(MessageHandler(filters.LOCATION, manejar_ubicacion))
     app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), responder))
     
-    print("Iniciando bot turístico en modo Webhook... 🇩🇴")
+    print("Iniciando bot turístico con formato limpio y enlaces HTML... 🇩🇴")
     
-    # Arrancamos el Webhook en lugar del polling
     app.run_webhook(
         listen="0.0.0.0",
         port=PORT,
