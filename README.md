@@ -65,7 +65,7 @@ source venv/bin/activate
 python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
-3. Configurar variables de entorno
+### 3. Configurar variables de entorno
 Crea un archivo llamado .env en la raíz del proyecto con el siguiente formato:
 ```
 TELEGRAM_TOKEN=tu_token_de_telegram_aqui
@@ -147,7 +147,7 @@ source venv/bin/activate
 python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
-3. Configure environment variables
+### 3. Configure environment variables
 Create a file named .env in the root of the project with the following format:
 ```
 TELEGRAM_TOKEN=your_telegram_token_here
