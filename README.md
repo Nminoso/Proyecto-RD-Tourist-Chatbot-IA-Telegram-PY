@@ -81,7 +81,7 @@ Nota: Para ejecutar localmente en tu PC, asegúrate de que `ENTORNO=local` para 
 
 ---
 
-### Versión en Inglés (`README_EN.md`)
+# 🇺🇸 ENGLISH VERSION
 
 
 # RD Tourist AI Bot 🇩🇴
@@ -149,7 +149,7 @@ python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
 ### 3. Configure environment variables
-Create a file named .env in the root of the project with the following format:
+Create a file named `.env` in the root of the project with the following format:
 ```
 TELEGRAM_TOKEN=your_telegram_token_here
 GROQ_API_KEY=your_groq_api_key_here
@@ -158,4 +158,4 @@ ENTORNO=local
 URL_RENDER=[https://your-app.onrender.com](https://your-app.onrender.com)
 WEBHOOK_SECRET=YourSecretWebhookPassword123
 ```
-Note: To run locally on your PC, make sure ENTORNO=local is set to activate Polling mode.
+Note: To run locally on your PC, make sure `ENTORNO=local` is set to activate Polling mode.
