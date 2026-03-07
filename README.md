@@ -66,7 +66,8 @@ python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
 ### 3. Configurar variables de entorno
-Crea un archivo llamado .env en la raíz del proyecto con el siguiente formato:
+- Crea un archivo llamado `.env` en la raíz del proyecto con el siguinete formato:
+
 ```
 TELEGRAM_TOKEN=tu_token_de_telegram_aqui
 GROQ_API_KEY=tu_api_key_de_groq_aqui
@@ -75,7 +76,7 @@ ENTORNO=local
 URL_RENDER=[https://tu-app.onrender.com](https://tu-app.onrender.com)
 WEBHOOK_SECRET=TuContraseñaSecretaParaWebhook123
 ```
-Nota: Para ejecutar localmente en tu PC, asegúrate de que ENTORNO=local para activar el modo Polling.
+Nota: Para ejecutar localmente en tu PC, asegúrate de que `ENTORNO=local` para activar el modo Polling.
 
 
 ---
