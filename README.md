@@ -57,7 +57,7 @@ pip install -r requirements.txt
 TELEGRAM_TOKEN=tu_telegram__token_aqui
 GROQ_API_KEY=tu_groq_api_key_aqui
 ```
-## 🚀 Ejecución del 
+## 🚀 Ejecución del Bot
 Una vez configurado el .env y con el ambiente virtual activo, ejecuta:
 
 ```Bash
