@@ -15,6 +15,11 @@ Asistente virtual inteligente para Telegram diseñado para ayudar a turistas a e
 
 ---
 
+## 🔛 Demostración en vivo
+Puedes probar el funcionamiento de este Bot en vivo con el siguiente enlace: https://t.me/DR_Guidr_Bot
+
+---
+
 ## 📦 Archivos del Proyecto
 - `rdbot.py` – Aplicación principal del bot (Python asíncrono con seguridad reforzada).
 - `.env` – Variables de entorno para Tokens, API Keys y configuración de entorno (No subir a Git).
@@ -96,6 +101,11 @@ Smart virtual assistant for Telegram designed to help tourists explore the Domin
   - 💵 USD to DOP exchange rate (via ExchangeRate-API).
 - **Robust Security:** Token masking in console logs, Secret Token for Webhooks, and allowed events filtering.
 - **Flexible Environments:** Supports `Polling` mode for local testing and `Webhook` mode for cloud deployment (Render).
+
+---
+
+## 🔛 Live Demo
+You can try out this bot live using the following link: https://t.me/DR_Guidr_Bot
 
 ---
 
